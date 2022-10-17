@@ -1,0 +1,28 @@
+..tuple1 <- sc_node_tuple;;
+..tuple2 <- sc_node_tuple;;
+..tuple3 <- sc_node_tuple;;
+human <- sc_node_class;;
+facility <- sc_node_class;;
+
+nrel_generality -> ..tuple1;;
+..tuple1 -> rrel_linked_variables: {_x; _y};;
+..tuple1 -> ..tuple2;;
+nrel_implication -> ..tuple2;;
+..tuple2 -> rrel_if: [* human _-> _x;; facility _-> _y;; *];;
+..tuple2 -> rrel_then: ..tuple3;;
+nrel_equivalent -> ..tuple3;;
+..tuple3 -> [*_x _=> rrel_responsible_for: _y;;*];;
+..tuple3 -> [*_y _=> rrel_chief: _x;;*];;
+
+
+..tuple4 <- sc_node_tuple;;
+..tuple5 <- sc_node_tuple;;
+facility <- sc_node_class;;
+bad <- sc_node_class;;
+
+nrel_existence -> ..tuple4;;
+..tuple4 -> rrel_linked_variables: {_z};;
+..tuple4 -> ..tuple5;;
+nrel_implication -> ..tuple5;;
+..tuple5 -> rrel_if: [* facility _-> _z;; bad _-> _z;; *];;
+..tuple5 -> rrel_then: [*_z _=> rrel_liquidate: _z;;*];;

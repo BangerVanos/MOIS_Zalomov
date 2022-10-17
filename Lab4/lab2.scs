@@ -1,0 +1,125 @@
+english_language <- sc_node_class;;
+russian_language <- sc_node_class;;
+
+facility <- sc_node_class;;
+
+facility => nrel_main_identificator: ["facility"];;
+facility => nrel_main_identificator: ["predpriyatie"];;
+english_language -> ["facility"];;
+russian_language -> ["predpriyatie"];;
+facility => nrel_system_identificator: ["concept_facility"];;
+
+
+..tuple1 <- sc_node_tuple;;
+sc_definition <- sc_node_class;;
+complex <- sc_node_class;;
+activity <- sc_node_class;;
+
+sc_definition -> ..node1(* => nrel_main_identificator: ["Def.Facility"];; *);;
+..node1 => nrel_used_constants: ..tuple1(* -> complex; activity;; *);;
+..node2 => rrel_sc_text_translation: ..node1;;
+..node2 -> rrel_example: ["Facility - a property complex used for entrepreneurial activities"];;
+english_language -> ["Facility - a property complex used for entrepreneurial activities"];["Def.Facility"];;
+..node1 -> rrel_sc_key_element: facility;;
+
+
+..tuple2 <- sc_node_tuple;;
+sc_statement <- sc_node_class;;
+balance <- sc_node_class;;
+bank <- sc_node_class;;
+account <- sc_node_class;;
+stamp <- sc_node_class;;
+nomination <- sc_node_role_relation;;
+
+sc_definition -> ..node1(* => nrel_main_identificator: ["St.Facility"];; *);;
+..node3 => nrel_used_constants: ..tuple2(* -> balance; bank; account; stamp; nomination;; *);;
+..node4 => rrel_sc_text_translation: ..node1;;
+..node4 -> rrel_example: ["The_facility has an independent balance account, settlement and other accounts in banks, a stamp with its nomination"];;
+english_language -> ["The facility has an independent balance account, settlement and other accounts in banks, a stamp with its nomination"];["St.Facility"];;
+..node3 -> rrel_sc_key_element: facility;;
+
+
+property_complex <- sc_node_class;;
+
+property_complex => nrel_include: facility;;
+
+
+facility -> roga_i_kopyta(* => nrel_manufacturing_department: paintintg_department; assembly_department; probation_department;; *);;
+
+
+chief <- sc_node_norole_relation;;
+
+chief => nrel_main_identificator: ["chief"];;
+chief => nrel_identificator: ["boss"];;
+chief => nrel_main_identificator: ["nachalnik"];;
+chief => nrel_identificator: ["rukovoditel"];;
+english_language -> ["chief"];;
+russian_language -> ["nachalnik"];;
+english_language -> ["boss"];;
+russian_language -> ["rukovoditel"];;
+chief => nrel_system_identificator: ["nrel_chief"];;
+
+
+..tuple3 <- sc_node_tuple;;
+official <- sc_node_class;;
+power <- sc_node_class;;
+subordinate <- sc_node_norole_relation;;
+
+sc_definition -> ..node5(* => nrel_main_identificator: ["Def.Chief"];; *);;
+..node5 => nrel_used_constants: ..tuple1(* -> complex; activity;; *);;
+..node6 => rrel_sc_text_translation: ..node1;;
+..node6 -> rrel_example: ["Chief - an official who has subordinates and wields power"];;
+english_language -> ["Chief - an official who has subordinates and wields power"];["Def.Chief"];;
+..node5 -> rrel_sc_key_element: chief;;
+
+
+..tuple4 <- sc_node_tuple;;
+employee <- sc_node_norole_relation;;
+need <- sc_node_norole_relation;;
+
+sc_statement -> ..node5(* => nrel_main_identificator: ["St.Chief"];; *);;
+..node7 => nrel_used_constants: ..tuple4(* -> complex; activity;; *);;
+..node8 => rrel_sc_text_translation: ..node1;;
+..node8 -> rrel_example: ["A good boss understands the needs of his employees"];;
+english_language -> ["A good boss understands the needs of his employees"];["St.Chief"];;
+..node7 -> rrel_sc_key_element: chief;;
+
+
+..node9 <- sc_node_class;;
+arity <- sc_node_class;;
+number <- sc_node_class;;
+
+arity -> ..node9 (* => nrel_measuring: 2;; *);;
+..node9 -> chief;;
+number -> 2;;
+
+
+relation <- sc_node_class;;
+binary_relation <- sc_node_class;;
+symmetrical_relation <- sc_node_class;;
+reflexive_relation <- sc_node_class;;
+transitive_relation <- sc_node_class;;
+oriented_relation <- sc_node_class;;
+
+relation => nrel_include: oriented_relation; binary_relation(* => nrel_include: symmetrical_relation; reflexive_relation; oriented_relation;; *);;
+symmetrical_relation -|> chief;;
+reflexive_relation -|> chief;;
+transitive_relation -|> chief;;
+oriented_relation -> chief;;
+
+
+human <- sc_node_class;;
+
+human -> Vasiliy_Ivanovich;;
+facility -> roga_i_kopyta(* => chief: Vasiliy_Ivanovich;; *);;
+
+
+manufacturing <- sc_node_class;;
+..tuple5 <- sc_node_tuple;;
+
+chief => nrel_second_domain: human;;
+chief => nrel_first_domain: manufacturing;;
+chief => nrel_definition_domain: ..node10;;
+..tuple5 => ..node10;;
+..tuple5 -> human;;
+..tuple5 -> manufacturing;;
