@@ -1,28 +1,57 @@
+logical_statement <- sc_node_class;; // Для удобства создадим класс "логическое высказывание"
+atomic_existence <- sc_node_class;;
+
+//Первое высказывание
+
+logical_statement -> logical_statement_1 (* -> [*
+
 ..tuple1 <- sc_node_tuple;;
 ..tuple2 <- sc_node_tuple;;
 ..tuple3 <- sc_node_tuple;;
-human <- sc_node_class;;
-facility <- sc_node_class;;
+nrel_responsible_for <- sc_node_norole_relation;;
 
-nrel_generality -> ..tuple1;;
-..tuple1 -> rrel_linked_variables: {_x; _y};;
-..tuple1 -> ..tuple2;;
-nrel_implication -> ..tuple2;;
-..tuple2 -> rrel_if: [* human _-> _x;; facility _-> _y;; *];;
-..tuple2 -> rrel_then: ..tuple3;;
-nrel_equivalent -> ..tuple3;;
-..tuple3 -> [*_x _=> rrel_responsible_for: _y;;*];;
-..tuple3 -> [*_y _=> rrel_chief: _x;;*];;
+vars <- sc_node_struct;
+-> _x;
+-> _y;;
 
+nrel_generality -> ..tuple1
+	(* 
+		-> rrel_bind_variables: vars;;
+		-> ..tuple2 
+		(*
+			<- nrel_implication;;
+			-> rrel_if: [* human _-> _x;; concept_facility _-> _y;; *] (* <- atomic_existence;; *);;
+			-> rrel_then: ..tuple3
+			(*
+				<- nrel_equivalence;;
+				-> [*_x _=> nrel_responsible_for: _y;;*] (* <- atomic_existence;; *);;
+				-> [*_y _=> nrel_chief: _x;;*] (* <- atomic_existence;; *);;
+			*);;
+		*);;
+	*);;
+*];; *);;
+
+
+//Второе высказывание
+
+logical_statement -> logical_statement_2 (* -> [*
 
 ..tuple4 <- sc_node_tuple;;
 ..tuple5 <- sc_node_tuple;;
-facility <- sc_node_class;;
 bad <- sc_node_class;;
+vars2 <- sc_node_struct;
+-> _z;;
 
-nrel_existence -> ..tuple4;;
-..tuple4 -> rrel_linked_variables: {_z};;
-..tuple4 -> ..tuple5;;
-nrel_implication -> ..tuple5;;
-..tuple5 -> rrel_if: [* facility _-> _z;; bad _-> _z;; *];;
-..tuple5 -> rrel_then: [*_z _=> rrel_liquidate: _z;;*];;
+nrel_liquidate <- sc_node_norole_relation;;
+
+nrel_existence -> ..tuple4
+	(*
+		-> rrel_bind_variables: vars2 (* <- atomic_existence;; *);;
+		-> ..tuple5
+		(*
+			<- nrel_implication;;
+			-> rrel_if: [* concept_facility _-> _z;; bad _-> _z;; *] (* <- atomic_existence;; *);;
+			-> rrel_then: [*_z _=> nrel_liquidate: _z;;*] (* <- atomic_existence;; *);;
+		*);;
+	*);;
+*];; *);;

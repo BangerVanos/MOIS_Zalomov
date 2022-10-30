@@ -1,51 +1,61 @@
-treugolnik <- sc_node_class;;
-ravnobedrenniy_treugolnik <- sc_node_class;;
-otrezok <- sc_node_class;;
-ploschad <- sc_node_class;;
-chislo <- sc_node_class;;
-okrujnost <- sc_node_class;;
-dlina <- sc_node_class;;
-tochnaya_velichina <- sc_node_class;;
+geometrical_problem <- sc_node_class;;
+
+geometrical_problem -> problem_1(* -> [*
+
+triangle <- sc_node_class;;
+isosceles_triangle <- sc_node_class;;
+line_segment <- sc_node_class;;
+square <- sc_node_class;;
+circle <- sc_node_class;;
+length <- sc_node_class;;
+exact_value <- sc_node_class;;
+
 ..node1 <- sc_node_class;;
 ..node2 <- sc_node_class;;
 ..node3 <- sc_node_class;;
+
 ..tuple <- sc_node_tuple;;
-nrel_osnovanie <- sc_node_norole_relation;;
-nrel_bokovaya_storona <- sc_node_norole_relation;;
-nrel_visota <- sc_node_norole_relation;;
-nrel_osnovanie <- sc_node_norole_relation;;
+
+nrel_base <- sc_node_norole_relation;;
+nrel_geometrical_side <- sc_node_norole_relation;;
+nrel_lateral_side <- sc_node_norole_relation;;
+nrel_height <- sc_node_norole_relation;;
+nrel_inscribed <- sc_node_norole_relation;;
 
 
-treugolnik => nrel_inclusion:ravnobedrenniy_treugolnik(* -> TreugolnikABC;;*);;
-treugolnik -> TreugolnikBDC;;
-TreugolnikBDC => nrel_storona:DC;BC;BD;;
-otrezok -> BC;AC;BD;DC;AB;;
-tochnaya_velichina -> ..node1;;
-dlina -> ..node1;;
+
+triangle => nrel_inclusion: isosceles_triangle(* -> TriangleABC;;*);;
+triangle -> TriangleBDC;;
+TriangleBDC => nrel_geometrical_side:DC;BC;BD;;
+line_segment -> BC;AC;BD;DC;AB;;
+exact_value -> ..node1;;
+length -> ..node1;;
 ..node1 -> BC;AB;;
-TreugolnikABC => nrel_bokovaya_storona:AB;BC;;
-..node1 => nrel_measurment:6 (* <- chislo;; *);;
-..node1 <- tochnaya_velichina;;
-..node1 <- dlina;;
-TreugolnikBDC => nrel_storona:DC;BC;;
-ploschad -> ..node2;;
-..node2 <- tochnaya_velichina;;
+TriangleABC => nrel_lateral_side:AB;BC;;
+..node1 => nrel_measurment:6 (* <- number;; *);;
+..node1 <- exact_value;;
+..node1 <- length;;
+TriangleBDC => nrel_geometrical_side:DC;BC;;
+square -> ..node2;;
+..node2 <- exact_value;;
 ..node2 => nrel_measurment: S;;
-S <- chislo;;
-chislo -> 1;;
+S <- number;;
+number -> 1;;
 ..node3 => nrel_measurment : 1;;
-dlina -> ..node3;;
-..node3 <- tochnaya_velichina;;
+length -> ..node3;;
+..node3 <- exact_value;;
 ..node3 -> ..node4;;
-okrujnost -> ..node5(* => nrel_radius: ..node4;;*);;
-..node5 => rrel_byt_vpisannim: TreugolnikBDC;;
+circle -> ..node5(* => nrel_radius: ..node4;;*);;
+..node5 => nrel_inscribed: TriangleBDC;;
 ..tuple -> AC;BD;;
-..tuple => rrel_peresecheniye : ..dot(* -> D;; *);;
-TreugolnikABC => nrel_osnovanie: AC;;
-..node2 <- ploschad;;
-..node2 <- tochnaya_velichina;;
-..node2 -> TreugolnikABC;;
-BD => nrel_visota: TreugolnikABC;;
-TreugolnikABC => nrel_osnovanie: AC;;
+..tuple => nrel_intersection : ..dot(* -> D;; *);;
+TriangleABC => nrel_base: AC;;
+..node2 <- square;;
+..node2 <- exact_value;;
+..node2 -> TriangleABC;;
+BD => nrel_height: TriangleABC;;
+TriangleABC => nrel_base: AC;;
+
+*];; *);;
 
 //Запихнуть задачу в структуру + поменять возможные идентификаторы на уже созданные

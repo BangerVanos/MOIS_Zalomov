@@ -1,46 +1,34 @@
-link_facility_en <- ["facility"];;
-link_facility_ru <- ["предприятие"];;
-
+//описываем класс предприятие
 concept_facility <- sc_node_class;;
 
-concept_facility => nrel_main_identificator: link_facility_en
+concept_facility => nrel_main_idtf: [facility]
 	(*
 		<-lang_en;;
 	*);;
-concept_facility => nrel_main_identificator: link_facility_ru
+concept_facility => nrel_main_idtf: [предприятие]
 	(*
 		<-lang_ru;;
 	*);;
-concept_facility => nrel_system_idtf: ["concept_facility"];;
+concept_facility => nrel_system_idtf: [concept_facility];;
 
+complex <- sc_node_class;;
+activity <- sc_node_class;;
 
 concept_facility
 <- rrel_key_sc_element: ...
 	(*
 		<- sc_definition;;
-		=> nrel_main_idtf: ; ;;
+		=> nrel_main_idtf: [Опр. Предприятие] 
+			(* <- lang_ru;; *) ;;
 		<= nrel_sc_text_translation: ...
 			(*	
-				-> []
-				(*<-lang_en;;*);;
+				-> rrel_example: [Предприятие - имущественный комплекс, используемый для осуществления предпринимательской деятельности]
+				(*<-lang_ru;;*);;
 			*);;
+		=> nrel_using_constants: ...
+			(* <- complex;activity;; *);;
 	*);;
 
-
-..tuple1 <- sc_node_tuple;;
-sc_definition <- sc_node_class;;
-complex <- sc_node_class;;
-activity <- sc_node_class;;
-
-sc_definition -> ..node1(* => nrel_main_identificator: ["Опр. Предприятие"];; *);;
-..node1 => nrel_using_constants: ..tuple1(* -> complex; activity;; *);;
-..node2 => rrel_sc_text_translation: ..node1;;
-..node2 -> rrel_example: ["Предприятие - имущественный комплекс, используемый для осуществления предпринимательской деятельности"];;
-english_language -> ["Предприятие - имущественный комплекс, используемый для осуществления предпринимательской деятельности"];["Опр. Предприятие"];;
-..node1 -> rrel_sc_key_element: concept_facility;;
-
-
-..tuple2 <- sc_node_tuple;;
 sc_statement <- sc_node_class;;
 balance <- sc_node_class;;
 bank <- sc_node_class;;
@@ -48,13 +36,20 @@ account <- sc_node_class;;
 stamp <- sc_node_class;;
 nomination <- sc_node_role_relation;;
 
-sc_definition -> ..node1(* => nrel_main_identificator: ["Утв 1. Предприятие"];; *);;
-..node3 => nrel_using_constants: ..tuple2(* -> balance; bank; account; stamp; nomination;; *);;
-..node4 => rrel_sc_text_translation: ..node1;;
-..node4 -> rrel_example: ["Предприятие имеет самостоятельный баланс, расчётный и иные счета в банках, печать со своим наименованием"];;
-english_language -> ["Предприятие имеет самостоятельный баланс, расчётный и иные счета в банках, печать со своим наименованием"];["St.Facility"];;
-..node3 -> rrel_sc_key_element: concept_facility;;
-
+concept_facility
+<- rrel_key_sc_element: ...
+	(*
+		<- sc_statement;;
+		=> nrel_main_idtf: [Утв.1 Предприятие] 
+			(* <- lang_ru;; *) ;;
+		<= nrel_sc_text_translation: ...
+			(*	
+				-> rrel_example: [Предприятие имеет самостоятельный баланс, расчётный и иные счета в банках, печать со своим наименованием]
+				(*<-lang_ru;;*);;
+			*);;
+		=> nrel_using_constants: ...
+			(* <- balance; bank; account; stamp; nomination;; *);;
+	*);;
 
 property_complex <- sc_node_class;;
 
@@ -64,62 +59,73 @@ property_complex => nrel_include: concept_facility;;
 concept_facility -> roga_i_kopyta(* => nrel_manufacturing_department: paintintg_department; assembly_department; probation_department;; *);;
 
 
+//описываем неролевое отношение начальник*
 nrel_chief <- sc_node_norole_relation;;
 
-nrel_chief => nrel_main_identificator: ["chief"];;
-nrel_chief => nrel_identificator: ["boss"];;
-nrel_chief => nrel_main_identificator: ["начальник"];;
-nrel_chief => nrel_identificator: ["начальник"];;
-english_language -> ["chief"];;
-russian_language -> ["начальник"];;
-english_language -> ["boss"];;
-russian_language -> ["начальник"];;
-nrel_chief => nrel_system_idtf: ["chief"];;
+nrel_chief => nrel_main_idtf: [chief*]
+	(*
+		<-lang_en;;
+	*);;
+nrel_chief => nrel_main_idtf: [начальник*]
+	(*
+		<-lang_ru;;
+	*);;
+nrel_chief => nrel_idtf: [руководитель*]
+	(*
+		<-lang_ru;;
+	*);;
+nrel_chief => nrel_main_idtf: [boss*]
+	(*
+		<-lang_en;;
+	*);;	
+nrel_chief => nrel_system_idtf: [nrel_chief];;
 
 
-..tuple3 <- sc_node_tuple;;
 official <- sc_node_class;;
 power <- sc_node_class;;
-subordinate <- sc_node_norole_relation;;
+nrel_subordinate <- sc_node_norole_relation;;
 
-sc_definition -> ..node5(* => nrel_main_identificator: ["Def.Chief"];; *);;
-..node5 => nrel_using_constants: ..tuple1(* -> complex; activity;; *);;
-..node6 => rrel_sc_text_translation: ..node1;;
-..node6 -> rrel_example: ["Chief - an official who has subordinates and wields power"];;
-english_language -> ["Chief - an official who has subordinates and wields power"];["Def.Chief"];;
-..node5 -> rrel_sc_key_element: nrel_chief;;
+nrel_chief
+<- rrel_key_sc_element: ...
+	(*
+		<- sc_definition;;
+		=> nrel_main_idtf: [Опр. Начальник] 
+			(* <- lang_ru;; *) ;;
+		<= nrel_sc_text_translation: ...
+			(*	
+				-> rrel_example: [Начальник - должностное лицо, имеющее подчинённых и располагающее властью]
+				(*<-lang_ru;;*);;
+			*);;
+		=> nrel_using_constants: ...
+			(* <- official;power;nrel_subordinate;; *);;
+	*);;
 
+nrel_employee <- sc_node_norole_relation;;
+nrel_need <- sc_node_norole_relation;;
 
-..tuple4 <- sc_node_tuple;;
-employee <- sc_node_norole_relation;;
-need <- sc_node_norole_relation;;
+nrel_chief
+<- rrel_key_sc_element: ...
+	(*
+		<- sc_statement;;
+		=> nrel_main_idtf: [Утв.1 Начальник] 
+			(* <- lang_ru;; *) ;;
+		<= nrel_sc_text_translation: ...
+			(*	
+				-> rrel_example: [Грамотный начальник понимает потребности своих сотрудников]
+				(*<-lang_ru;;*);;
+			*);;
+		=> nrel_using_constants: ...
+			(* <- nrel_employee; nrel_need;; *);;
+	*);;
+	
+..class_node <- sc_node_class;;
+arity -> ..class_node 
+	(* 
+		=> nrel_measuring: 2 (* <- number;; *);;
+		-> nrel_chief;;
+	*);;
 
-sc_statement -> ..node5(* => nrel_main_identificator: ["St.Chief"];; *);;
-..node7 => nrel_using_constants: ..tuple4(* -> complex; activity;; *);;
-..node8 => rrel_sc_text_translation: ..node1;;
-..node8 -> rrel_example: ["A good boss understands the needs of his employees"];;
-english_language -> ["A good boss understands the needs of his employees"];["St.Chief"];;
-..node7 -> rrel_sc_key_element: nrel_chief;;
-
-
-..node9 <- sc_node_class;;
-arity <- sc_node_class;;
-number <- sc_node_class;;
-
-arity -> ..node9 (* => nrel_measuring: 2;; *);;
-..node9 -> nrel_chief;;
-number -> 2;;
-
-
-relation <- sc_node_class;;
-binary_relation <- sc_node_class;;
-symmetrical_relation <- sc_node_class;;
-reflexive_relation <- sc_node_class;;
-transitive_relation <- sc_node_class;;
-oriented_relation <- sc_node_class;;
-
-relation => nrel_include: oriented_relation; binary_relation(* => nrel_include: symmetrical_relation; reflexive_relation; oriented_relation;; *);;
-symmetrical_relation -|> nrel_chief;;
+symmetric_relation -|> nrel_chief;;
 reflexive_relation -|> nrel_chief;;
 transitive_relation -|> nrel_chief;;
 oriented_relation -> nrel_chief;;
@@ -130,13 +136,8 @@ human <- sc_node_class;;
 human -> Vasiliy_Ivanovich;;
 concept_facility -> roga_i_kopyta(* => nrel_chief: Vasiliy_Ivanovich;; *);;
 
-
-manufacturing <- sc_node_class;;
-..tuple5 <- sc_node_tuple;;
-
 nrel_chief => nrel_second_domain: human;;
 nrel_chief => nrel_first_domain: manufacturing;;
-nrel_chief => nrel_definition_domain: ..node10;;
 
 nrel_chief => nrel_definition_domain: ...
 	(*
@@ -147,7 +148,3 @@ nrel_chief => nrel_definition_domain: ...
 			};;
 	*);;
 
-
-..tuple5 => ..node10;;
-..tuple5 -> human;;
-..tuple5 -> manufacturing;;
