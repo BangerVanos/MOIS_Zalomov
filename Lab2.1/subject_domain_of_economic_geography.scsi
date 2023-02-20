@@ -1,0 +1,37 @@
+subject_domain_of_economic_geography
+
+=> nrel_main_idtf: [Предметная область экономической географии]
+	(*
+		<- lang_ru;;
+	*);
+
+=> nrel_main_idtf: [Subject domain of economic geography]
+	(*
+		<- lang_en;;
+	*);
+
+<- subject_domain;	
+
+=> nrel_private_subject_domain:	
+	subject_domain_of_general_geography_of_world_economy;
+	subject_domain_of_industry_geography;
+	subject_domain_of_regional_geography;
+	
+
+<= nrel_private_subject_domain:
+	subject_domain_of_geography;
+
+-> rrel_maximum_studied_object_class:
+	economical_geography;
+
+-> rrel_not_maximum_studied_object_class:	
+	general_geography_of_world_economy;
+	industry_geography;
+	regional_geography;
+	
+
+-> rrel_explored_relation:	
+	nrel_economically_active;
+	nrel_economic_development_factor;;
+
+	

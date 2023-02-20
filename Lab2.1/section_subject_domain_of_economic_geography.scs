@@ -1,0 +1,40 @@
+//Раздел. Предметная область "Экономическая география"
+
+section_subject_domain_of_economic_geography
+
+=> nrel_main_idtf: [Section. Economical geography]
+	(*
+		<-lang_en;;
+	*);
+=> nrel_main_idtf: [Раздел. Экономическая география]
+	(*
+		<-lang_ru;;
+	*);
+
+=> nrel_system_idtf: [section_subject_of_domain_economical_geography];
+
+<- non_atomic_section;;
+
+section_subject_domain_of_economic_geography = [*^"file://subject_domain_of_economic_geography.scsi"*];;
+
+section_subject_domain_of_economic_geography <= nrel_section_decomposition: 
+	{
+		section_subject_domain_of_general_geography_of_world_economy;
+		section_subject_domain_of_industry_geography;
+		section_subject_domain_of_regional_geography
+	};
+
+
+-> rrel_key_sc_element:	
+	concept_economical_region;
+	concept_aglomeration;
+	concept_territorial_production_complex;
+	concept_economic_activity;
+	concept_economic_development_factor;
+	nrel_economically_active;
+	nrel_economic_development_factor;
+	subject_domain_of_econimical_geography;;
+	
+	
+	
+
